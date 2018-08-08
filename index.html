@@ -1,0 +1,192 @@
+<!-- 	
+	Teo Espero
+	BS Cloud and Systems Administration
+	Western Governors University
+
+	#Web-Dev-Bootcamp-Udemy
+-->
+
+<! DOCTYPE html>
+<html lang="en">
+<html>
+	<head>	
+			<link href="normalize.css" rel="stylesheet" type="text/css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script type="text/javascript" src="bootstrap.js"></script>
+			<link href="bootstrap.css" rel="stylesheet" type="text/css">
+			<link href="myCSS.css" rel="stylesheet" type="text/css">
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+			<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+			<meta charset="utf-8">
+			<title>teoespero.com | Javascript Programming - Rock, Paper, Scissor</title>
+			<meta name="description" content="">
+  			<meta name="author" content="teoespero">
+	</head>
+	<body>
+		<div class="container">
+			<div class="jumbotron" id="jumbo">
+				<h1 id="header">Rock, Paper, Scissor</h1>
+				<h2 id="whoWon">Begin Game</h2>
+			</div>
+
+			<div class="row center-block">
+				<div class="col-lg-6 col-md-6">
+					<div class="thumbnail">
+					<img src="left-paper.png" id="myPlayerImg">
+					<h3>You</h3>
+					</div>
+				</div>
+
+					<div class="col-lg-6 col-md-6">
+					<div class="thumbnail">
+					<img src="right-paper.png" id="pcPlayerImg">
+					<h3>The Computer</h3>
+					</div>
+				</div>
+			</div>
+
+			<div class="row center-block">
+				<div class="col-lg-6 col-md-6">
+					<h3 id="yourCount">0</h3>
+				</div>
+
+				<div class="col-lg-6 col-md-6">
+					<h3 id="pcCount">0</h3>
+				</div>
+			</div>
+
+			<div class="row">
+				<form>
+					<label>How many rounds: </label><br>
+					<input type="text" id="gamesEnd" value="1">
+					<br>
+					<br>
+					<button id="myPlayer" type="button" class="btn btn-default custom active">
+						Your Move <i class="fas fa-angry"></i>
+					</button>
+					<br><br>
+					<button id="myReset" type="button" class="btn btn-default custom">
+						Reset <i class="far fa-angry"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+			
+			
+			
+			
+			var myOptions = ["left-paper.png", "left-rock.png","left-scissor.png"];
+			var myPCOptions = ["right-paper.png", "right-rock.png","right-scissor.png"];
+			var yourScore = 0;
+			var pcScore = 0;
+
+			var howManyGames = 1;
+			var gameCounter = 0;
+
+			var theWinner = "";
+		
+
+
+			document.getElementById("myPlayer").addEventListener("click", function player01(){
+				howManyGames = document.getElementById("gamesEnd").value;
+				// alert(howManyGames);
+				// alert(gameCounter);
+				if (gameCounter < howManyGames){
+					var arr = [];
+					while(arr.length < 2){
+					    var randomnumber = Math.floor(Math.random()*3);
+					    if(arr.indexOf(randomnumber) > -1) continue;
+					    arr[arr.length] = randomnumber;
+					}
+						
+						// alert(arr[0] + "," + arr[1]);
+
+					var myPCMove = arr[0];
+					var myPlayerMove = arr[1];
+
+					document.getElementById("whoWon").textContent = "";
+					
+					
+					document.getElementById("myPlayerImg").src = myOptions[myPlayerMove];
+					document.getElementById("pcPlayerImg").src = myPCOptions[myPCMove];
+
+					
+					if ((myPlayerMove == 0 && myPCMove == 0)){
+					 	document.getElementById("whoWon").textContent = "Neither won this round";
+					}
+					if ((myPlayerMove == 0 && myPCMove == 1)){
+					 	document.getElementById("whoWon").textContent = "You won this round";
+					 	yourScore++;
+					 	document.getElementById("yourCount").textContent = yourScore;
+					}
+					if ((myPlayerMove == 0 && myPCMove == 2)){
+					 	document.getElementById("whoWon").textContent = "You lost this round";
+					 	pcScore++;
+					 	document.getElementById("pcCount").textContent = pcScore;
+					}
+
+
+					if ((myPlayerMove == 1 && myPCMove == 0)){
+					 	document.getElementById("whoWon").textContent = "You lost this round";
+					 	pcScore++;
+					 	document.getElementById("pcCount").textContent = pcScore;
+					}
+					if ((myPlayerMove == 1 && myPCMove == 1)){
+					 	document.getElementById("whoWon").textContent = "Neither this round";
+					}
+					if ((myPlayerMove == 1 && myPCMove == 2)){
+					 	document.getElementById("whoWon").textContent = "You won this round";
+					 	yourScore++;
+					 	document.getElementById("yourCount").textContent = yourScore;
+					}
+
+					if ((myPlayerMove == 2 && myPCMove == 0)){
+					 	document.getElementById("whoWon").textContent = "You won this round";
+					 	yourScore++;
+					 	document.getElementById("yourCount").textContent = yourScore;
+					}
+					if ((myPlayerMove == 2 && myPCMove == 1)){
+					 	document.getElementById("whoWon").textContent = "You lost this round";
+					 	pcScore++;
+					 	document.getElementById("pcCount").textContent = pcScore;
+					}
+					if ((myPlayerMove == 2 && myPCMove == 2)){
+					 	document.getElementById("whoWon").textContent = "Neither won this round";
+					}
+
+				}
+				else {
+					if(yourScore > pcScore){
+						theWinner = "The human won.";
+					}
+					if(yourScore < pcScore){
+						theWinner = "The human lost.";	
+					}
+					if(yourScore == pcScore){
+						theWinner = "Neither lost. It's a draw.";	
+					}
+					document.getElementById("whoWon").textContent = "Game Ends. " + theWinner;
+				}
+				gameCounter++;
+				// alert(arr[0] + "," + arr[1]);
+		  	});
+
+			document.getElementById("myReset").addEventListener("click", function resetGame(){
+				document.getElementById("myPlayerImg").src = myOptions[0];
+				document.getElementById("pcPlayerImg").src = myPCOptions[0];
+				document.getElementById("whoWon").textContent = "Begin Game";
+
+				yourScore = 0;
+				pcScore = 0;
+
+				document.getElementById("yourCount").textContent = yourScore;
+				document.getElementById("pcCount").textContent = yourScore;
+				document.getElementById("gamesEnd").value = 1;
+
+				gameCounter = 0;
+			});
+		</script>
+	</body>
+</html>
